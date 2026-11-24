@@ -128,16 +128,18 @@ export function QrScannerPanel({
   return (
     <div className="space-y-6">
       {/* Camera Scanner Card */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="flex items-center gap-2 text-base font-bold text-slate-900">
-              <ScanLine className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-              Pemindai Kamera QR
-            </h2>
-            <p className="mt-1 text-sm text-slate-600">
-              Arahkan kamera ke QR Code peserta untuk check-in otomatis.
-            </p>
+          <div className="flex items-start gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <ScanLine className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div>
+              <h2 className="text-base font-bold text-slate-900">Pemindai Kamera QR</h2>
+              <p className="mt-0.5 text-sm text-slate-600">
+                Arahkan kamera ke QR Code peserta untuk check-in otomatis.
+              </p>
+            </div>
           </div>
 
           {!cameraActive ? (
@@ -145,7 +147,7 @@ export function QrScannerPanel({
               type="button"
               onClick={startCamera}
               disabled={cameraStarting}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
             >
               {cameraStarting ? (
                 <>
@@ -163,7 +165,7 @@ export function QrScannerPanel({
             <button
               type="button"
               onClick={() => void stopCamera()}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-800 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-800 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 focus-visible:ring-offset-2"
             >
               <CameraOff className="h-4 w-4" aria-hidden="true" />
               Hentikan Kamera
@@ -180,7 +182,7 @@ export function QrScannerPanel({
           </div>
         )}
 
-        <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-900">
+        <div className="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-slate-900">
           <div id={READER_ELEMENT_ID} className="min-h-[260px] w-full" />
           {!cameraActive && !cameraStarting && (
             <div className="flex flex-col items-center justify-center px-4 py-8 text-center text-slate-300">
@@ -195,14 +197,20 @@ export function QrScannerPanel({
       </section>
 
       {/* Manual UUID Check-in Card */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-        <h2 className="flex items-center gap-2 text-base font-bold text-slate-900">
-          <Keyboard className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-          Input Manual Kode Tiket (UUID)
-        </h2>
-        <p className="mt-1 text-sm text-slate-600">
-          Alternatif jika kamera tidak tersedia atau QR sulit terbaca.
-        </p>
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <Keyboard className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 className="text-base font-bold text-slate-900">
+              Input Manual Kode Tiket (UUID)
+            </h2>
+            <p className="mt-0.5 text-sm text-slate-600">
+              Alternatif cepat jika kamera tidak tersedia atau QR sulit terbaca.
+            </p>
+          </div>
+        </div>
 
         <form onSubmit={handleManualSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
           <div className="flex-1">
@@ -216,13 +224,13 @@ export function QrScannerPanel({
               onChange={(e) => setManualCode(e.target.value)}
               placeholder="Contoh: 66666666-6666-4666-8666-666666666666"
               required
-              className="min-h-[44px] w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 font-mono text-sm text-slate-900 placeholder:font-sans placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+              className="min-h-[44px] w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 font-mono text-sm text-slate-900 placeholder:font-sans placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
             />
           </div>
           <button
             type="submit"
             disabled={isValidating || !manualCode.trim()}
-            className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+            className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
           >
             {isValidating ? (
               <>

@@ -100,22 +100,26 @@ export default function AdminScanPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="flex items-center gap-2.5 text-2xl font-extrabold text-slate-900 sm:text-3xl">
-            <QrCode className="h-7 w-7 text-indigo-600" aria-hidden="true" />
-            Scanner Check-in Gerbang
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Validasi tiket peserta secara atomik menggunakan kamera atau kode UUID manual.
-          </p>
+      <div className="mb-8 flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <QrCode className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Scanner Check-in Gerbang
+            </h1>
+            <p className="mt-1 text-sm text-slate-600">
+              Validasi tiket peserta secara atomik menggunakan kamera atau kode UUID manual.
+            </p>
+          </div>
         </div>
 
         <Link
           href="/admin/dashboard"
-          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
         >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          <ArrowLeft className="h-4 w-4 text-blue-600" aria-hidden="true" />
           Kembali ke Dashboard
         </Link>
       </div>
@@ -133,20 +137,20 @@ export default function AdminScanPage() {
           <section aria-labelledby="scan-result-heading">
             <h2
               id="scan-result-heading"
-              className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-600"
+              className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-600"
             >
               Hasil Validasi Terakhir
             </h2>
 
             {!latestOutcome ? (
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-500">
+              <div className="rounded-lg border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-500">
                 Belum ada tiket yang dipindai pada sesi ini.
               </div>
             ) : latestOutcome.success ? (
               <div
                 role="status"
                 aria-live="polite"
-                className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-emerald-950 shadow-sm"
+                className="rounded-lg border-2 border-emerald-300 bg-emerald-50 p-5 text-emerald-950 shadow-sm"
               >
                 <div className="flex items-start gap-3">
                   <CheckCircle2
@@ -193,7 +197,7 @@ export default function AdminScanPage() {
               <div
                 role="alert"
                 aria-live="assertive"
-                className="rounded-2xl border-2 border-rose-300 bg-rose-50 p-5 text-rose-950 shadow-sm"
+                className="rounded-lg border-2 border-rose-300 bg-rose-50 p-5 text-rose-950 shadow-sm"
               >
                 <div className="flex items-start gap-3">
                   <XCircle
@@ -217,9 +221,11 @@ export default function AdminScanPage() {
           </section>
 
           {/* Session History */}
-          <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="flex items-center gap-2 text-sm font-bold text-slate-900">
-              <History className="h-4 w-4 text-slate-600" aria-hidden="true" />
+          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="flex items-center gap-2.5 text-sm font-bold text-slate-900">
+              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                <History className="h-4 w-4" aria-hidden="true" />
+              </span>
               Riwayat Scan Sesi Ini ({history.length})
             </h2>
 

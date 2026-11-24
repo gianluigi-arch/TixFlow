@@ -61,52 +61,54 @@ export function Navbar() {
   ].filter((item) => item.show);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link
-          href="/"
-          className="inline-flex min-h-[44px] items-center gap-2.5 rounded-lg px-1 text-lg font-bold tracking-tight text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
-            <Ticket className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <span>TixFlow</span>
-        </Link>
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
+        <div className="flex h-full items-center gap-8">
+          <Link
+            href="/"
+            className="inline-flex min-h-[44px] items-center gap-2.5 rounded-md px-1 text-lg font-bold tracking-tight text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-600 text-white">
+              <Ticket className="h-4 w-4" aria-hidden="true" />
+            </span>
+            <span>TixFlow</span>
+          </Link>
 
-        {/* Desktop navigation */}
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive =
-              link.href === '/'
-                ? pathname === '/' || pathname.startsWith('/events/')
-                : pathname.startsWith(link.href);
+          {/* Desktop Corporate Underline Tabs */}
+          <nav aria-label="Navigasi utama" className="hidden h-full items-stretch gap-6 md:flex">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive =
+                link.href === '/'
+                  ? pathname === '/' || pathname.startsWith('/events/')
+                  : pathname.startsWith(link.href);
 
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive ? 'page' : undefined}
-                className={`inline-flex min-h-[44px] items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 ${
-                  isActive
-                    ? 'bg-indigo-50 text-indigo-700'
-                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                }`}
-              >
-                <Icon className="h-4 w-4" aria-hidden="true" />
-                {link.label}
-              </Link>
-            );
-          })}
-        </nav>
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`inline-flex items-center gap-2 border-b-2 px-1 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${
+                    isActive
+                      ? 'border-blue-600 text-blue-600'
+                      : 'border-transparent text-slate-600 hover:border-slate-300 hover:text-slate-900'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
         {/* Desktop Auth Area */}
         <div className="hidden items-center gap-3 md:flex">
           {isLoading ? (
-            <div className="h-9 w-36 animate-pulse rounded-lg bg-slate-200" aria-hidden="true" />
+            <div className="h-9 w-36 animate-pulse rounded-md bg-slate-200" aria-hidden="true" />
           ) : user ? (
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5">
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5">
                 <span className="max-w-[140px] truncate text-sm font-medium text-slate-900">
                   {user.name}
                 </span>
@@ -116,7 +118,7 @@ export function Navbar() {
                 type="button"
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-900 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
               >
                 <LogOut className="h-4 w-4" aria-hidden="true" />
                 {loggingOut ? 'Keluar...' : 'Keluar'}
@@ -126,13 +128,13 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
               >
                 Masuk
               </Link>
               <Link
                 href="/register"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
               >
                 Daftar
               </Link>
@@ -147,7 +149,7 @@ export function Navbar() {
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav-menu"
           aria-label={mobileOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 transition hover:bg-slate-100 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
         >
           {mobileOpen ? (
             <X className="h-5 w-5" aria-hidden="true" />
@@ -163,7 +165,7 @@ export function Navbar() {
           id="mobile-nav-menu"
           className="border-t border-slate-200 bg-white px-4 py-4 md:hidden"
         >
-          <nav aria-label="Navigasi mobile" className="flex flex-col gap-1.5">
+          <nav aria-label="Navigasi mobile" className="flex flex-col gap-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive =
@@ -177,10 +179,10 @@ export function Navbar() {
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`inline-flex min-h-[44px] items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 ${
+                  className={`inline-flex min-h-[44px] items-center gap-2.5 border-l-2 px-3 py-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                     isActive
-                      ? 'bg-indigo-50 text-indigo-700'
-                      : 'text-slate-700 hover:bg-slate-100'
+                      ? 'border-blue-600 bg-slate-50 text-blue-600'
+                      : 'border-transparent text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
@@ -192,10 +194,10 @@ export function Navbar() {
 
           <div className="mt-4 border-t border-slate-200 pt-4">
             {isLoading ? (
-              <div className="h-11 w-full animate-pulse rounded-lg bg-slate-200" />
+              <div className="h-11 w-full animate-pulse rounded-md bg-slate-200" />
             ) : user ? (
               <div className="space-y-3">
-                <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                <div className="flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-slate-900">{user.name}</p>
                     <p className="truncate text-xs text-slate-600">{user.email}</p>
@@ -206,7 +208,7 @@ export function Navbar() {
                   type="button"
                   onClick={handleLogout}
                   disabled={loggingOut}
-                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-60"
                 >
                   <LogOut className="h-4 w-4" aria-hidden="true" />
                   {loggingOut ? 'Keluar...' : 'Keluar'}
@@ -217,14 +219,14 @@ export function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileOpen(false)}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
                 >
                   Daftar
                 </Link>

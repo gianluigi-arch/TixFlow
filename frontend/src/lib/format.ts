@@ -14,7 +14,7 @@ export function formatDateTime(iso: string): string {
   if (Number.isNaN(date.getTime())) {
     return iso;
   }
-  return new Intl.DateTimeFormat('id-ID', {
+  const formatted = new Intl.DateTimeFormat('id-ID', {
     weekday: 'short',
     day: 'numeric',
     month: 'long',
@@ -22,6 +22,7 @@ export function formatDateTime(iso: string): string {
     hour: '2-digit',
     minute: '2-digit',
   }).format(date);
+  return `${formatted} WIB`;
 }
 
 export function formatShortDate(iso: string): string {

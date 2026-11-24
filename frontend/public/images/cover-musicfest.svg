@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <rect width="800" height="450" fill="#0F172A"/>
+  <rect x="0" y="0" width="800" height="8" fill="#2563EB"/>
+
+  <!-- Minimal Solid Geometric Spotlights -->
+  <polygon points="170,36 72,340 278,340" fill="#1E293B"/>
+  <polygon points="630,36 522,340 728,340" fill="#1E293B"/>
+  <polygon points="400,36 270,340 530,340" fill="#172554"/>
+
+  <!-- Stage Truss & Spotlight Fixtures -->
+  <rect x="72" y="34" width="656" height="14" rx="4" fill="#334155"/>
+  <rect x="148" y="26" width="44" height="22" rx="4" fill="#2563EB"/>
+  <rect x="378" y="26" width="44" height="22" rx="4" fill="#F59E0B"/>
+  <rect x="608" y="26" width="44" height="22" rx="4" fill="#2563EB"/>
+
+  <!-- Equalizer Soundwave Bars -->
+  <rect x="156" y="216" width="24" height="112" rx="6" fill="#334155"/>
+  <rect x="196" y="176" width="24" height="152" rx="6" fill="#2563EB"/>
+  <rect x="236" y="136" width="24" height="192" rx="6" fill="#60A5FA"/>
+  <rect x="276" y="192" width="24" height="136" rx="6" fill="#2563EB"/>
+  <rect x="316" y="110" width="24" height="218" rx="6" fill="#F59E0B"/>
+  <rect x="356" y="156" width="24" height="172" rx="6" fill="#60A5FA"/>
+  <rect x="396" y="88" width="24" height="240" rx="6" fill="#FFFFFF"/>
+  <rect x="436" y="142" width="24" height="186" rx="6" fill="#60A5FA"/>
+  <rect x="476" y="116" width="24" height="212" rx="6" fill="#F59E0B"/>
+  <rect x="516" y="180" width="24" height="148" rx="6" fill="#2563EB"/>
+  <rect x="556" y="148" width="24" height="180" rx="6" fill="#60A5FA"/>
+  <rect x="596" y="204" width="24" height="124" rx="6" fill="#2563EB"/>
+  <rect x="636" y="234" width="24" height="94" rx="6" fill="#334155"/>
+
+  <!-- Stage Deck & Crowd Dots -->
+  <rect x="72" y="340" width="656" height="16" rx="4" fill="#2563EB"/>
+  <rect x="72" y="368" width="656" height="54" rx="8" fill="#1E293B"/>
+  <circle cx="132" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="182" cy="395" r="10" fill="#94A3B8"/>
+  <circle cx="232" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="282" cy="395" r="10" fill="#F59E0B"/>
+  <circle cx="332" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="382" cy="395" r="10" fill="#FFFFFF"/>
+  <circle cx="432" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="482" cy="395" r="10" fill="#F59E0B"/>
+  <circle cx="532" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="582" cy="395" r="10" fill="#94A3B8"/>
+  <circle cx="632" cy="395" r="10" fill="#60A5FA"/>
+  <circle cx="682" cy="395" r="10" fill="#94A3B8"/>
+</svg>

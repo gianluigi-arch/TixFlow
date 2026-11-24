@@ -3,12 +3,15 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import {
+  CalendarDays,
   CalendarPlus,
   CheckCircle2,
+  Layers,
   LayoutDashboard,
   Loader2,
   Plus,
   QrCode,
+  Ticket,
 } from 'lucide-react';
 import {
   EmptyState,
@@ -238,20 +241,24 @@ export default function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       {/* Header */}
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="flex items-center gap-2.5 text-2xl font-extrabold text-slate-900 sm:text-3xl">
-            <LayoutDashboard className="h-7 w-7 text-indigo-600" aria-hidden="true" />
-            Dashboard Panitia
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Kelola event kampus, kategori tiket, dan pantau ketersediaan kuota.
-          </p>
+      <div className="mb-8 flex flex-col gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <LayoutDashboard className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Dashboard Panitia
+            </h1>
+            <p className="mt-1 text-sm text-slate-600">
+              Kelola event kampus, kategori tiket, dan pantau ketersediaan kuota real-time.
+            </p>
+          </div>
         </div>
 
         <Link
           href="/admin/scan"
-          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
         >
           <QrCode className="h-4 w-4" aria-hidden="true" />
           Buka Scanner Check-in
@@ -260,23 +267,40 @@ export default function AdminDashboardPage() {
 
       {/* KPI Cards */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Total Event
-          </p>
-          <p className="mt-2 text-3xl font-extrabold text-slate-900">{events.length}</p>
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Total Event
+            </p>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <CalendarDays className="h-4 w-4" aria-hidden="true" />
+            </span>
+          </div>
+          <p className="mt-3 text-3xl font-extrabold text-slate-900">{events.length}</p>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Total Kategori Tiket
-          </p>
-          <p className="mt-2 text-3xl font-extrabold text-slate-900">{totalTiers}</p>
+
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Total Kategori Tiket
+            </p>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <Layers className="h-4 w-4" aria-hidden="true" />
+            </span>
+          </div>
+          <p className="mt-3 text-3xl font-extrabold text-slate-900">{totalTiers}</p>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Kuota Tersisa / Total
-          </p>
-          <p className="mt-2 text-3xl font-extrabold text-indigo-700">
+
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Kuota Tersisa / Total
+            </p>
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <Ticket className="h-4 w-4" aria-hidden="true" />
+            </span>
+          </div>
+          <p className="mt-3 text-3xl font-extrabold text-blue-600">
             {remainingQuota}{' '}
             <span className="text-lg font-semibold text-slate-500">/ {totalQuota}</span>
           </p>
@@ -286,19 +310,23 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Create Event Form */}
         <section className="lg:col-span-5" aria-labelledby="create-event-heading">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2
-              id="create-event-heading"
-              className="flex items-center gap-2 text-lg font-bold text-slate-900"
-            >
-              <CalendarPlus className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-              Buat Event Baru
-            </h2>
+          <div className="rounded-lg border border-slate-200 border-t-4 border-t-blue-600 bg-white p-6 shadow-sm">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                <CalendarPlus className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <h2
+                id="create-event-heading"
+                className="text-lg font-bold text-slate-900"
+              >
+                Buat Event Baru
+              </h2>
+            </div>
 
             {eventSuccess && (
               <div
                 role="status"
-                className="mt-4 flex items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm font-medium text-emerald-800"
+                className="mt-4 flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3.5 text-sm font-medium text-emerald-800"
               >
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                 {eventSuccess}
@@ -308,7 +336,7 @@ export default function AdminDashboardPage() {
             {eventFormError && (
               <div
                 role="alert"
-                className="mt-4 rounded-xl border border-rose-200 bg-rose-50 p-3.5 text-sm font-medium text-rose-800"
+                className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-3.5 text-sm font-medium text-rose-800"
               >
                 {eventFormError}
               </div>
@@ -330,7 +358,7 @@ export default function AdminDashboardPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="TechFest Kampus 2026"
-                  className="min-h-[44px] w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                  className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                 />
               </div>
 
@@ -347,7 +375,7 @@ export default function AdminDashboardPage() {
                   required
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
-                  className="min-h-[44px] w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                  className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                 />
               </div>
 
@@ -366,7 +394,7 @@ export default function AdminDashboardPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Auditorium Utama Gedung A"
-                  className="min-h-[44px] w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                  className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                 />
               </div>
 
@@ -385,14 +413,14 @@ export default function AdminDashboardPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Jelaskan agenda, pembicara, atau informasi penting peserta (min 10 karakter)..."
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                  className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={creatingEvent}
-                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
               >
                 {creatingEvent ? (
                   <>
@@ -442,7 +470,7 @@ export default function AdminDashboardPage() {
               return (
                 <article
                   key={event.id}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
                 >
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
@@ -453,7 +481,7 @@ export default function AdminDashboardPage() {
                     </div>
                     <Link
                       href={`/events/${event.id}`}
-                      className="inline-flex min-h-[36px] shrink-0 items-center text-xs font-semibold text-indigo-600 hover:underline"
+                      className="inline-flex min-h-[36px] shrink-0 items-center text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
                     >
                       Lihat Halaman Publik
                     </Link>
@@ -474,7 +502,7 @@ export default function AdminDashboardPage() {
                         {event.ticketTiers.map((tier) => (
                           <div
                             key={tier.id}
-                            className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+                            className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                           >
                             <div>
                               <p className="text-sm font-bold text-slate-900">{tier.name}</p>
@@ -535,7 +563,7 @@ export default function AdminDashboardPage() {
                           value={draft.name}
                           onChange={(e) => updateDraft(event.id, { name: e.target.value })}
                           placeholder="Early Bird / VIP"
-                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                         />
                       </div>
 
@@ -554,7 +582,7 @@ export default function AdminDashboardPage() {
                           required
                           value={draft.price}
                           onChange={(e) => updateDraft(event.id, { price: e.target.value })}
-                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                         />
                       </div>
 
@@ -574,7 +602,7 @@ export default function AdminDashboardPage() {
                           onChange={(e) =>
                             updateDraft(event.id, { totalQuota: e.target.value })
                           }
-                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                          className="min-h-[44px] w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                         />
                       </div>
 

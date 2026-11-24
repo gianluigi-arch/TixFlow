@@ -73,7 +73,7 @@ export function QuotaBadge({
 export function RoleBadge({ role }: { role: Role }) {
   if (role === 'PANITIA') {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-800">
+      <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
         <ShieldCheck className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         PANITIA
       </span>

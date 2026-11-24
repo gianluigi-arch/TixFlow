@@ -12,6 +12,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
 COPY tsconfig.json next.config.ts postcss.config.mjs tailwind.config.ts ./
+COPY public ./public
 COPY src ./src
 
 ARG NEXT_PUBLIC_API_URL=http://localhost:4000
@@ -31,6 +32,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
 RUN chown -R node:node /app
 

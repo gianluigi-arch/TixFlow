@@ -105,22 +105,26 @@ export default function MyTicketsPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="flex items-center gap-2.5 text-2xl font-extrabold text-slate-900 sm:text-3xl">
-            <Ticket className="h-7 w-7 text-indigo-600" aria-hidden="true" />
-            Tiket Saya
-          </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Tunjukkan QR Code di bawah kepada panitia saat memasuki gerbang acara.
-          </p>
+      <div className="mb-6 flex flex-col gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <Ticket className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Tiket Saya
+            </h1>
+            <p className="mt-1 text-sm text-slate-600">
+              Tunjukkan E-Ticket &amp; QR Code di bawah kepada panitia saat memasuki gerbang.
+            </p>
+          </div>
         </div>
 
         <button
           type="button"
           onClick={() => void loadTickets()}
           disabled={isLoading}
-          className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
         >
           <RefreshCw
             className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`}
@@ -142,10 +146,10 @@ export default function MyTicketsPage() {
             type="button"
             aria-pressed={filter === tab.value}
             onClick={() => setFilter(tab.value)}
-            className={`min-h-[44px] rounded-xl px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 ${
+            className={`min-h-[44px] rounded-lg px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${
               filter === tab.value
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                ? 'bg-blue-600 text-white'
+                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
             }`}
           >
             {tab.label}
