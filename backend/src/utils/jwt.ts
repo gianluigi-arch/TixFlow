@@ -39,10 +39,17 @@ export function verifyAuthToken(token: string): AuthPayload {
   };
 }
 
+function isCookieSecure(): boolean {
+  if (env.COOKIE_SECURE !== undefined) {
+    return env.COOKIE_SECURE === 'true';
+  }
+  return env.NODE_ENV === 'production';
+}
+
 export function getAuthCookieOptions(): CookieOptions {
   return {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
+    secure: isCookieSecure(),
     sameSite: 'lax',
     path: '/',
     maxAge: SEVEN_DAYS_MS,
@@ -52,7 +59,7 @@ export function getAuthCookieOptions(): CookieOptions {
 export function getClearCookieOptions(): CookieOptions {
   return {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
+    secure: isCookieSecure(),
     sameSite: 'lax',
     path: '/',
   };
