@@ -4,7 +4,7 @@ export const swaggerSpec = {
     title: 'TixFlow API',
     version: '1.0.0',
     description:
-      'REST API for TixFlow — Concurrent Campus Event Ticketing & QR Access System (Phase 2: Core Auth, RBAC, and Events).',
+      'REST API for TixFlow — Concurrent Campus Event Ticketing & QR Access System (Auth, RBAC, Events, Transactional Booking & QR Check-in).',
   },
   servers: [
     {
@@ -16,6 +16,7 @@ export const swaggerSpec = {
     { name: 'Health', description: 'Service health check' },
     { name: 'Auth', description: 'Cookie-based JWT authentication and session management' },
     { name: 'Events', description: 'Campus events and ticket tier management' },
+    { name: 'Tickets', description: 'Transactional ticket booking and atomic QR check-in' },
   ],
   components: {
     securitySchemes: {
@@ -196,6 +197,77 @@ export const swaggerSpec = {
               tier: { $ref: '#/components/schemas/TicketTier' },
             },
             required: ['tier'],
+          },
+        },
+        required: ['status', 'data'],
+      },
+      TicketStatus: {
+        type: 'string',
+        enum: ['VALID', 'USED', 'CANCELLED'],
+      },
+      Ticket: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', format: 'uuid' },
+          ticketCode: { type: 'string', format: 'uuid' },
+          userId: { type: 'string', format: 'uuid' },
+          tierId: { type: 'string', format: 'uuid' },
+          status: { $ref: '#/components/schemas/TicketStatus' },
+          checkedInAt: { type: 'string', format: 'date-time', nullable: true },
+          createdAt: { type: 'string', format: 'date-time' },
+          tier: { $ref: '#/components/schemas/TicketTier' },
+        },
+        required: ['id', 'ticketCode', 'userId', 'tierId', 'status', 'createdAt'],
+      },
+      BookTicketRequest: {
+        type: 'object',
+        required: ['tierId'],
+        properties: {
+          tierId: {
+            type: 'string',
+            format: 'uuid',
+            example: '44444444-4444-4444-8444-444444444444',
+          },
+        },
+      },
+      CheckinTicketRequest: {
+        type: 'object',
+        required: ['ticketCode'],
+        properties: {
+          ticketCode: {
+            type: 'string',
+            format: 'uuid',
+            example: '66666666-6666-4666-8666-666666666666',
+          },
+        },
+      },
+      TicketResponse: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'success' },
+          data: {
+            type: 'object',
+            properties: {
+              ticket: { $ref: '#/components/schemas/Ticket' },
+            },
+            required: ['ticket'],
+          },
+        },
+        required: ['status', 'data'],
+      },
+      TicketsListResponse: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', example: 'success' },
+          data: {
+            type: 'object',
+            properties: {
+              tickets: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/Ticket' },
+              },
+            },
+            required: ['tickets'],
           },
         },
         required: ['status', 'data'],
@@ -564,6 +636,161 @@ export const swaggerSpec = {
           },
           '404': {
             description: 'Event not found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/tickets/book': {
+      post: {
+        tags: ['Tickets'],
+        summary: 'Book a ticket with pessimistic row-level locking (PARTICIPANT only)',
+        security: [{ cookieAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/BookTicketRequest' },
+            },
+          },
+        },
+        responses: {
+          '201': {
+            description: 'Ticket booked successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TicketResponse' },
+              },
+            },
+          },
+          '400': {
+            description: 'Validation failed',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ValidationErrorResponse' },
+              },
+            },
+          },
+          '401': {
+            description: 'Authentication required',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '403': {
+            description: 'Forbidden: requires PARTICIPANT role',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '404': {
+            description: 'Ticket tier not found',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '409': {
+            description: 'Ticket quota is sold out',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/tickets/my': {
+      get: {
+        tags: ['Tickets'],
+        summary: 'List tickets owned by the authenticated participant (PARTICIPANT only)',
+        security: [{ cookieAuth: [] }],
+        responses: {
+          '200': {
+            description: 'Participant tickets list',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TicketsListResponse' },
+              },
+            },
+          },
+          '401': {
+            description: 'Authentication required',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '403': {
+            description: 'Forbidden: requires PARTICIPANT role',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/tickets/checkin': {
+      post: {
+        tags: ['Tickets'],
+        summary: 'Validate and check in a ticket QR code atomically (PANITIA only)',
+        security: [{ cookieAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/CheckinTicketRequest' },
+            },
+          },
+        },
+        responses: {
+          '200': {
+            description: 'Ticket checked in successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TicketResponse' },
+              },
+            },
+          },
+          '400': {
+            description: 'Validation failed',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ValidationErrorResponse' },
+              },
+            },
+          },
+          '401': {
+            description: 'Authentication required',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '403': {
+            description: 'Forbidden: requires PANITIA role',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ErrorResponse' },
+              },
+            },
+          },
+          '409': {
+            description: 'Ticket already used, cancelled, or not found',
             content: {
               'application/json': {
                 schema: { $ref: '#/components/schemas/ErrorResponse' },

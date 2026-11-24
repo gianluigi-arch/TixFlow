@@ -9,6 +9,7 @@ import { swaggerSpec } from './docs/swagger';
 import { errorHandler, notFoundHandler } from './middlewares/errorHandler';
 import authRoutes from './routes/auth.routes';
 import eventRoutes from './routes/event.routes';
+import ticketRoutes from './routes/ticket.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -57,6 +58,7 @@ export function createApp(): Application {
 
   app.use('/api/auth', authRoutes);
   app.use('/api/events', eventRoutes);
+  app.use('/api/tickets', ticketRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
