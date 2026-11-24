@@ -10,6 +10,17 @@ Sistem manajemen *ticketing* event kampus berbasis arsitektur *full-stack* yang 
 - **Infrastructure:** Multi-stage Docker & Docker Compose (`db`, `backend`, `frontend`)
 
 ---
+## UI & API Preview
+
+| Katalog Event (Public) | Kartu Tiket & QR Code (`PARTICIPANT`) |
+| :---: | :---: |
+| ![Katalog Event](docs/screenshots/Katalog%20Event.png) | ![Tiket Saya dan QR Code](docs/screenshots/Tiket%20Saya%20+%20QR%20Code.png) |
+
+| Dashboard Panitia (`PANITIA`) | Dokumentasi Interaktif Swagger UI |
+| :---: | :---: |
+| ![Dashboard Panitia](docs/screenshots/Dashboard%20Panitia.png) | ![Swagger UI Endpoints](docs/screenshots/Swagger%20UI%20Endpoints.png) |
+
+---
 
 ## System Architecture
 
